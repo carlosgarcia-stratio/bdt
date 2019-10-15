@@ -33,10 +33,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContexts;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -55,6 +59,8 @@ public class GosecSSOUtils {
     public String ssoHost = System.getProperty("ssoHost", "sso.paas.labs.stratio.com");
 
     public String managementHost = System.getProperty("managementHost", "/service/gosecmanagement");
+
+    private Boolean verifyHost = true;
 
     public GosecSSOUtils(String ssHost, String userName, String passWord, String tenant) {
         this.ssoHost = ssHost;
@@ -78,11 +84,17 @@ public class GosecSSOUtils {
         sslContext.init(null, ALL_TRUSTING_TRUST_MANAGER, new SecureRandom());
         HttpClientContext context = HttpClientContext.create();
         HttpGet httpGet = new HttpGet(protocol + ssoHost + "/login");
-        HttpClient client = HttpClientBuilder.create()
+        HttpClientBuilder clientBuilder = HttpClientBuilder.create()
                 .setSslcontext(sslContext)
                 .setRedirectStrategy(new LaxRedirectStrategy())
                 .setDefaultRequestConfig(RequestConfig.custom()
-                        .setCookieSpec(CookieSpecs.STANDARD).setCircularRedirectsAllowed(true).build()).build();
+                .setCookieSpec(CookieSpecs.STANDARD).setCircularRedirectsAllowed(true).build());
+        if (!this.verifyHost) {
+            SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(SSLContexts.custom().
+                    loadTrustMaterial(null, new TrustSelfSignedStrategy()).build(), NoopHostnameVerifier.INSTANCE);
+            clientBuilder.setSSLSocketFactory(scsf);
+        }
+        HttpClient client = clientBuilder.build();
         try {
             HttpResponse firstResponse = client.execute(httpGet, context);
 
@@ -126,6 +138,7 @@ public class GosecSSOUtils {
             }
 
         } catch (Exception e) {
+            logger.debug(e.getMessage());
             e.getStackTrace();
         }
         return cookieToken;
@@ -153,5 +166,9 @@ public class GosecSSOUtils {
             return "";
         }
 
+    }
+
+    public void setVerifyHost(Boolean verifyHost) {
+        this.verifyHost = verifyHost;
     }
 }

@@ -22,6 +22,7 @@ import com.ning.http.client.Response;
 import com.stratio.qa.utils.GosecSSOUtils;
 import com.stratio.qa.utils.RemoteSSHConnection;
 import com.stratio.qa.utils.ThreadProperty;
+import com.sun.tools.corba.se.idl.constExpr.BooleanOr;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -119,10 +120,13 @@ public class DcosSpec extends BaseGSpec {
      * @param passWord password
      * @throws Exception exception
      */
-    @Given("^I( do not)? set sso token using host '(.+?)' with user '(.+?)' and password '(.+?)'( and tenant '(.+?)')?$")
-    public void setGoSecSSOCookie(String set, String ssoHost, String userName, String passWord, String tenant) throws Exception {
+    @Given("^I( do not)? set sso token using host '(.+?)' with user '(.+?)' and password '(.+?)'( and tenant '(.+?)')?( without host name verification)?$")
+    public void setGoSecSSOCookie(String set, String ssoHost, String userName, String passWord, String tenant, String hostVerifier) throws Exception {
         if (set == null) {
-            HashMap<String, String> ssoCookies = new GosecSSOUtils(ssoHost, userName, passWord, tenant).ssoTokenGenerator();
+            GosecSSOUtils ssoUtils = new GosecSSOUtils(ssoHost, userName, passWord, tenant);
+            ssoUtils.setVerifyHost(hostVerifier == null);
+            HashMap<String, String> ssoCookies = ssoUtils.ssoTokenGenerator();
+
             String[] tokenList = {"user", "dcos-acs-auth-cookie"};
             List<com.ning.http.client.cookie.Cookie> cookiesAtributes = addSsoToken(ssoCookies, tokenList);
 
