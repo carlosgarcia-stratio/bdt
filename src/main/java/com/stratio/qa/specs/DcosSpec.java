@@ -22,7 +22,6 @@ import com.ning.http.client.Response;
 import com.stratio.qa.utils.GosecSSOUtils;
 import com.stratio.qa.utils.RemoteSSHConnection;
 import com.stratio.qa.utils.ThreadProperty;
-import com.sun.tools.corba.se.idl.constExpr.BooleanOr;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
