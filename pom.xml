@@ -88,6 +88,7 @@
         <crossdata-drivers.version>2.16.1-63d529c</crossdata-drivers.version>
         <kafka-scala.version>2.11</kafka-scala.version>
         <kafka.version>2.3.1</kafka.version>
+        <marathon-client.version>0.6.0</marathon-client.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -499,6 +500,11 @@
             <groupId>com.stratio.crossdata.driver</groupId>
             <artifactId>crossdata-jdbc-common</artifactId>
             <version>${crossdata-drivers.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mesosphere</groupId>
+            <artifactId>marathon-client</artifactId>
+            <version>${marathon-client.version}</version>
         </dependency>
     </dependencies>
     <repositories>
