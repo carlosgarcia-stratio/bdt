@@ -18,6 +18,15 @@ package com.stratio.qa.specs;
 
 import com.ning.http.client.Response;
 import com.stratio.qa.assertions.Assertions;
+import com.stratio.qa.clients.cct.MarathonServicesApi.CctMarathonServiceApiClient;
+import com.stratio.qa.clients.cct.deployApi.DeployApiClient;
+import com.stratio.qa.clients.mesos.MesosApiClient;
+import com.stratio.qa.models.cct.deployApi.DeployApiConstants;
+import com.stratio.qa.models.cct.deployApi.DeployedApp;
+import com.stratio.qa.models.cct.deployApi.DeployedTask;
+import com.stratio.qa.models.cct.marathonServiceApi.DeployedService;
+import com.stratio.qa.models.cct.marathonServiceApi.DeployedServiceTask;
+import com.stratio.qa.models.cct.marathonServiceApi.MarathonServiceApiConstants;
 import com.stratio.qa.utils.ThreadProperty;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
@@ -31,12 +40,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Future;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.fail;
@@ -52,6 +59,12 @@ public class CCTSpec extends BaseGSpec {
 
     RestSpec restSpec;
 
+    private DeployApiClient deployApiClient;
+
+    private CctMarathonServiceApiClient marathonServiceApiClient;
+
+    private MesosApiClient mesosApiClient;
+
     /**
      * Generic constructor.
      *
@@ -60,6 +73,9 @@ public class CCTSpec extends BaseGSpec {
     public CCTSpec(CommonG spec) {
         this.commonspec = spec;
         restSpec = new RestSpec(spec);
+        deployApiClient = DeployApiClient.getInstance(this.commonspec);
+        marathonServiceApiClient = CctMarathonServiceApiClient.getInstance(this.commonspec);
+        mesosApiClient = MesosApiClient.getInstance(this.commonspec);
     }
 
     /**
@@ -400,6 +416,87 @@ public class CCTSpec extends BaseGSpec {
             logger.error("Request failed to endpoint: " + endPoint + " with status code: " + commonspec.getResponse().getStatusCode() + " and response: " + commonspec.getResponse().getResponse());
             throw new Exception("Request failed to endpoint: " + endPoint + " with status code: " + commonspec.getResponse().getStatusCode() + " and response: " + commonspec.getResponse().getResponse());
         }
+    }
+
+    /**
+     * Checks in Command Center service status
+     * @param timeout
+     * @param wait
+     * @param service
+     * @param numTasks
+     * @param taskNameRegex
+     * @param expectedStatus Expected status (healthy|unhealthy|running|stopped)
+     * @throws Exception
+     */
+    @Given("^Test in less than '(\\d+)' seconds, checking each '(\\d+)' seconds, I check that the service '(.+?)' in CCT with '(\\d+)' tasks of type '(.+?)' is in '(running|failed|finished|staging|starting)' status")
+    public void checkServiceStatusNew(Integer timeout, Integer wait, String service, Integer numTasks, String taskNameRegex, String expectedStatus) throws Exception {
+
+        if (ThreadProperty.get("cct-marathon-services_id") == null) {
+            String parsedSate = DeployApiConstants.statesDict.get(expectedStatus);
+            checkServiceStatusFromDeployApi(timeout, wait, service, numTasks, taskNameRegex, parsedSate);
+        } else {
+            String parsedSatus = MarathonServiceApiConstants.statusDict.get(expectedStatus);
+            checkNotDeployedFromMarathonServiceApi(timeout, wait, service, numTasks, taskNameRegex, parsedSatus);
+        }
+    }
+
+    private void checkServiceStatusFromDeployApi(Integer timeout, Integer pause, String serviceId, Integer numTasksToCheck, String taskNameRegex, String expectedStatus) throws Exception {
+
+        int time = 0;
+        while (time < timeout) {
+            DeployedApp app = deployApiClient.getDeployedApp(serviceId);
+            List<DeployedTask> tasks = app.getTasks();
+
+            List<DeployedTask> lastTasks = tasks.stream().collect(
+                    Collectors.groupingBy(DeployedTask::getName, Collectors.maxBy(Comparator.comparing(DeployedTask::getTimestamp)))
+            ).values().stream().map(Optional::get).collect(Collectors.toList());
+
+            Integer numTasks = new Long(lastTasks.stream()
+                    .filter(task -> task.getName().matches(taskNameRegex))
+                    .filter(task -> task.getState().equals(expectedStatus))
+                    .count()).intValue();
+
+            if (numTasks == numTasksToCheck) {
+                return;
+            }
+            Thread.sleep(pause * 1000);
+            time += pause;
+        }
+        assertThat(false).as("Number of tasks for service " + serviceId + " and task regexp " +
+                taskNameRegex + " does not match").isTrue();
+    }
+
+
+    private void checkNotDeployedFromMarathonServiceApi(Integer timeout, Integer pause, String serviceId, Integer numTasksToCheck, String taskNameRegex, String expectedStatus) throws Exception {
+
+        int time = 0;
+        Map<String, String> queryParams = new HashMap<String, String>() { {
+                put("tpage", "1");
+                put("tsize", "500");
+            } };
+        while (time < timeout) {
+            DeployedService service = marathonServiceApiClient.getService(serviceId, queryParams);
+            List<DeployedServiceTask> tasks = service.getTasks();
+
+            List<DeployedServiceTask> lastTasks = tasks.stream().collect(
+                    Collectors.groupingBy(DeployedServiceTask::getName, Collectors.maxBy(Comparator.comparing(DeployedServiceTask::getTimestamp)))
+            ).values().stream().map(Optional::get).collect(Collectors.toList());
+
+            Integer numTasks = new Long(lastTasks.stream()
+                    .filter(task -> task.getName().matches(taskNameRegex))
+                    .filter(task -> task.getStatus().toString().equals(expectedStatus))
+                    .count()).intValue();
+
+            if (numTasks.equals(numTasksToCheck)) {
+                return;
+            } else {
+                logger.info("Execpted " + numTasksToCheck + " for task " + taskNameRegex + " but got " + numTasks);
+            }
+            Thread.sleep(pause * 1000);
+            time += pause;
+        }
+        assertThat(false).as("Number of tasks for service " + serviceId + " and task regexp " +
+                taskNameRegex + " does not match").isTrue();
     }
 
 
