@@ -40,14 +40,10 @@ public class MarathonSpec extends BaseGSpec {
     @Then("^I can check in Marathon that service with id '(.*)' has all tasks in '(running|finished|failed|staging|starting|killed)' state$")
     public void checkAllTasksState(String appId, String state) throws Exception {
         AppResponse app = marathonApiClient.getApp(appId);
-        System.out.println(app.getApp());
         Collection<Task> tasks = app.getApp().getTasks();
 
         String translatedState = MarathonConstants.statesDict.get(state);
         int count = (int) tasks.stream().filter(task -> task.getState().equals(translatedState)).count();
-
-        System.out.println(count);
-        System.out.println(tasks.size());
 
         assertThat(count)
                 .as("Number of task in state " + translatedState + " for service " + appId + " does not match.")
