@@ -18,16 +18,16 @@ package com.stratio.qa.models;
 
 public class BaseResponse {
 
-    private int hhtpStatus;
+    private int httpStatus;
 
     private String rawResponse;
 
     public int getHttpStatus() {
-        return hhtpStatus;
+        return httpStatus;
     }
 
-    public void setHttpStatus(int hhtpStatus) {
-        this.hhtpStatus = hhtpStatus;
+    public void setHttpStatus(int httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
     public String getRawResponse() {
