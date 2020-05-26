@@ -5,6 +5,7 @@ Only listing significant user-visible, not internal code cleanups and minor bug 
 ## 0.18.0 (upcoming)
 
 * [QATM-3284] Fix loop replacement in datatables
+* Add base service clients and models
 
 ## 0.17.0 (May 25, 2020)
 
