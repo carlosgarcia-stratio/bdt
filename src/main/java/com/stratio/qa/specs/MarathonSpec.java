@@ -40,7 +40,7 @@ public class MarathonSpec extends BaseGSpec {
         marathonApiClient = MarathonApiClient.getInstance(this.commonspec);
     }
 
-    @Then("^I can check in Marathon that service with id '(.*)' has '(\\d+)' task[s]? in '(running|finished|failed|staging|starting|killed)' state$")
+    @Then("^service with id '(.*)' has '(\\d+)' task[s]? in '(running|finished|failed|staging|starting|killed)' state in Marathon$")
     public void checkNumberOfTasksState(String appId, int numberOfTasks, String state) throws Exception {
         AppResponse app = marathonApiClient.getApp(appId);
         Collection<Task> tasks = app.getApp().getTasks();
@@ -53,7 +53,7 @@ public class MarathonSpec extends BaseGSpec {
                 .isEqualTo(numberOfTasks);
     }
 
-    @Then("^I can check in Marathon that service with id '(.*)' has all tasks in '(running|finished|failed|staging|starting|killed)' state$")
+    @Then("^service with id '(.*)' has all tasks in '(running|finished|failed|staging|starting|killed)' state in Marathon$")
     public void checkAllTasksState(String appId, String state) throws Exception {
         AppResponse app = marathonApiClient.getApp(appId);
         Collection<Task> tasks = app.getApp().getTasks();
