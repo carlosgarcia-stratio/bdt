@@ -69,5 +69,4 @@ public class MesosApiClient extends BaseClient {
         Response response = get(url);
         return map(response, MesosTasksResponse.class);
     }
-
 }
