@@ -42,44 +42,55 @@ public class DeployApiClient extends BaseClient {
         super(common);
     }
 
-    public DeployedApp getDeployedApp(String appId) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/deploy-api/deployments/services?instanceName=");
-        String endpoint = url.concat(appId);
+    public BaseResponseList<DeployedApp> getDeployedApps() throws Exception {
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                        .concat(":443/service/").concat(ThreadProperty.get("deploy_api_id")).concat("/deployments");
 
-        Response response = get(endpoint);
+        Response response = get(url);
+        return mapList(response, DeployedApp.class);
+    }
+
+    public DeployedApp getDeployedApp(String appId) throws Exception {
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":443/service/").concat(ThreadProperty.get("deploy_api_id")).concat("/deployments/service?instanceName=");
+        url = url.concat(appId);
+
+        Response response = get(url);
         return map(response, DeployedApp.class);
     }
 
     public BaseResponseList<SandboxItem> getLogPaths(String taskId) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/deploy-api/deployments/logs/");
-        String endpoint = url.concat(taskId);
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":443/service/").concat(ThreadProperty.get("deploy_api_id")).concat("/deployments/logs/");
+        url = url.concat(taskId);
 
-        Response response = get(endpoint);
+        Response response = get(url);
         return mapList(response, SandboxItem.class);
     }
 
     public TearDownResponse tearDown(String serviceId) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/deploy-api/deploy/teardown?frameworkName=");
-        String endpoint =  url.concat(serviceId);
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":443/service/").concat(ThreadProperty.get("deploy_api_id")).concat("/deploy/teardown?frameworkName=");
+        url =  url.concat(serviceId);
 
-        Response response = delete(endpoint);
+        Response response = delete(url);
         return map(response, TearDownResponse.class);
     }
 
     public BaseResponseList<ServiceStatusModel> getDeployedServices() throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/deploy-api/deploy/status/all");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":443/service/").concat(ThreadProperty.get("deploy_api_id")).concat("/deploy/status/all");
 
         Response response = delete(url);
         return mapList(response, ServiceStatusModel.class);
     }
 
     public BaseResponse scale(int instances, String service) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/deploy-api/deploy/scale?");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":443/service/").concat(ThreadProperty.get("deploy_api_id")).concat("/deploy/scale?");
         url = url.concat("instances=").concat(Integer.toString(instances)).concat("&serviceName=").concat(service);
 
         Response response = put(url);
         return map(response);
     }
-
-
 }

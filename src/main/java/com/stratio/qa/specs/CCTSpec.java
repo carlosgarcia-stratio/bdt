@@ -18,6 +18,15 @@ package com.stratio.qa.specs;
 
 import com.ning.http.client.Response;
 import com.stratio.qa.assertions.Assertions;
+import com.stratio.qa.clients.cct.CctMarathonServiceApiClient;
+import com.stratio.qa.clients.cct.DeployApiClient;
+import com.stratio.qa.clients.mesos.MesosApiClient;
+import com.stratio.qa.models.cct.deployApi.DeployedApp;
+import com.stratio.qa.models.cct.deployApi.DeployedTask;
+import com.stratio.qa.models.cct.marathonServiceApi.DeployedService;
+import com.stratio.qa.models.cct.marathonServiceApi.DeployedServiceTask;
+import com.stratio.qa.models.cct.marathonServiceApi.TaskStatus;
+import com.stratio.qa.models.mesos.MesosTask;
 import com.stratio.qa.utils.ThreadProperty;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -32,10 +41,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Future;
 import java.util.regex.Pattern;
 
@@ -53,6 +59,12 @@ public class CCTSpec extends BaseGSpec {
 
     RestSpec restSpec;
 
+    private DeployApiClient deployApiClient;
+
+    private CctMarathonServiceApiClient marathonServiceApiClient;
+
+    private MesosApiClient mesosApiClient;
+
     /**
      * Generic constructor.
      *
@@ -61,6 +73,69 @@ public class CCTSpec extends BaseGSpec {
     public CCTSpec(CommonG spec) {
         this.commonspec = spec;
         restSpec = new RestSpec(spec);
+        deployApiClient = DeployApiClient.getInstance(this.commonspec);
+        marathonServiceApiClient = CctMarathonServiceApiClient.getInstance(this.commonspec);
+        mesosApiClient = MesosApiClient.getInstance(this.commonspec);
+    }
+
+    @When("^I get host ip for task '(.+?)' in service with id '(.+?)' from CCT and save the value in environment variable '(.+?)'$")
+    public void getMarathonTaskId(String taskName, String serviceId, String envVar) throws Exception {
+        if (ThreadProperty.get("cct-marathon-services_id") == null) {
+            DeployedTask task = getServiceTaskFromDeployApi(serviceId, taskName);
+            ThreadProperty.set(envVar, task.getHost());
+        } else {
+            DeployedServiceTask task = getServiceTaskFromCctMarathonService(serviceId, taskName);
+            ThreadProperty.set(envVar, task.getHost());
+        }
+    }
+
+    private DeployedTask getServiceTaskFromDeployApi(String serviceId, String taskName) throws Exception {
+        DeployedApp app = deployApiClient.getDeployedApp(serviceId);
+        return app.getTasks().stream()
+                        .filter(task -> task.getState().equals(MesosTask.Status.TASK_RUNNING.toString()))
+                        .filter(task -> task.getName().matches(taskName))
+                        .findFirst().orElse(null);
+    }
+
+    private DeployedServiceTask getServiceTaskFromCctMarathonService(String serviceId, String taskName) throws Exception {
+        DeployedService service = marathonServiceApiClient.getService(serviceId);
+        return service.getTasks().stream()
+                        .filter(task -> task.getStatus().equals(TaskStatus.RUNNING))
+                        .filter(task -> task.getName().matches(taskName))
+                        .findFirst().orElse(null);
+    }
+
+    @When("^I get container name for task '(.+?)' in service with id '(.+?)' and save the value in environment variable '(.+?)'$")
+    public void getMesosTaskContainerName(String taskName, String serviceId, String envVar) throws Exception {
+        String taskId = "";
+        if (ThreadProperty.get("cct-marathon-services_id") == null) {
+            DeployedTask task = getServiceTaskFromDeployApi(serviceId, taskName);
+            // Deploy-api from 0.11
+            taskId = task.getId();
+        } else {
+            DeployedServiceTask task = getServiceTaskFromCctMarathonService(serviceId, taskName);
+            taskId = task.getId();
+        }
+
+        MesosTask mesosTask = mesosApiClient.getMesosTask(taskId).getTasks().get(0);
+        String containerId = getMesosTaskContainerId(mesosTask);
+        assertThat(containerId).as("Error searching containerId for mesos task: " + taskId).isNotNull();
+
+        String containerName = "mesos-".concat(containerId);
+        ThreadProperty.set(envVar, containerName);
+    }
+
+    private String getMesosTaskContainerId(MesosTask task) {
+        return task.getStatuses().stream()
+                        .sorted(Comparator.comparing(com.stratio.qa.models.mesos.TaskStatus::getTimestamp,
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+                        .map(com.stratio.qa.models.mesos.TaskStatus::getContainerStatus)
+                        .filter(status -> status.containsKey("container_id"))
+                        .map(status -> (Map<String, Object>) status.get("container_id"))
+                        .filter(container -> container.containsKey("value"))
+                        .map(container -> String.valueOf(container.get("value")))
+                        .findFirst()
+                        .orElse(null);
     }
 
     /**

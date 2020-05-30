@@ -62,8 +62,8 @@ public class BaseClient {
         try {
             r = mapper.readValue(response.getResponseBody(), type);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            log.debug("Error mapping response to " + type.getCanonicalName() + ". Setting empty...");
+            log.warn(e.getMessage());
+            log.warn("Error mapping response to " + type.getCanonicalName() + ". Setting empty...");
             r = type.newInstance();
         }
 
@@ -79,7 +79,8 @@ public class BaseClient {
         try {
             r = mapper.readValue(response.getResponseBody(), new TypeReference<List<T>>() { });
         } catch (Exception e) {
-            log.debug("Error mapping response to " + type.getCanonicalName() + ". Setting empty...");
+            log.warn(e.getMessage());
+            log.warn("Error mapping response to " + type.getCanonicalName() + ". Setting empty...");
             r = r = new ArrayList<>();
         }
 

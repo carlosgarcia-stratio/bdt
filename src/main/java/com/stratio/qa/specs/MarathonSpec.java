@@ -20,6 +20,7 @@ import com.stratio.qa.clients.marathon.MarathonApiClient;
 import com.stratio.qa.models.marathon.AppResponse;
 import com.stratio.qa.models.marathon.MarathonConstants;
 import com.stratio.qa.models.marathon.Task;
+import com.stratio.qa.utils.ThreadProperty;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,6 +65,81 @@ public class MarathonSpec extends BaseGSpec {
         assertThat(count)
                 .as("Number of task in state " + translatedState + " for service " + appId + " does not match.")
                 .isEqualTo(tasks.size());
+    }
+
+    @Then("^I get environment variable '(.*)' for service with id '(.*)' and save the value in environment variable '(.+?)'$")
+    public void saveServiceEnvVariable(String serviceEnvVar, String serviceId, String envVar) throws Exception {
+        AppResponse app = marathonApiClient.getApp(serviceId);
+        assertThat(app.getApp().getEnv().get(serviceEnvVar))
+                .as("Environment variable " + serviceEnvVar + " not found for service " + serviceId)
+                .isNotNull();
+
+        String value = app.getApp().getEnv().get(serviceEnvVar).toString();
+        ThreadProperty.set(envVar, value);
+    }
+
+    @Then("^I get label '(.*)' for service with id '(.*)' and save the value in environment variable '(.+?)'$")
+    public void saveServiceLabel(String label, String serviceId, String envVar) throws Exception {
+        AppResponse app = marathonApiClient.getApp(serviceId);
+        assertThat(app.getApp().getLabels().get(label))
+                .as("Label " + label + " not found for service " + serviceId)
+                .isNotNull();
+
+        String value = app.getApp().getLabels().get(label);
+        ThreadProperty.set(envVar, value);
+    }
+
+    @Then("^in less than '(\\d+)' seconds, checking each '(\\d+)' seconds, service with id '(.*)' has '(\\d+)' task[s]? in '(running|finished|failed|staging|starting|killed)' state in Marathon$")
+    public void checkNumberOfTasksStateWithPolling(int timeout, int pause, String appId, int numberOfTasks, String state) throws Exception {
+        AppResponse app;
+        Collection<Task> tasks;
+        int count;
+        String translatedState = MarathonConstants.statesDict.get(state);
+
+        int time = 0;
+        while (time < timeout) {
+            app = marathonApiClient.getApp(appId);
+            tasks = app.getApp().getTasks();
+
+            count = (int) tasks.stream().filter(task -> task.getState().equals(translatedState)).count();
+            if (count == numberOfTasks) {
+                return;
+            }
+
+            Thread.sleep(pause * 1000);
+            time += pause;
+        }
+
+        assertThat(false)
+                .as("Number of task in state " + translatedState + " for service " + appId + " does not match after " + timeout + " seconds.")
+                .isTrue();
+    }
+
+    @Then("^in less than '(\\d+)' seconds, checking each '(\\d+)' seconds, service with id '(.*)' has all tasks in '(running|finished|failed|staging|starting|killed)' state in Marathon$")
+    public void checkAllTasksStateWithPolling(int timeout, int pause, String appId, String state) throws Exception {
+        AppResponse app;
+        Collection<Task> tasks;
+
+        String translatedState = MarathonConstants.statesDict.get(state);
+        int count;
+
+        int time = 0;
+        while (time < timeout) {
+            app = marathonApiClient.getApp(appId);
+            tasks = app.getApp().getTasks();
+
+            count = (int) tasks.stream().filter(task -> task.getState().equals(translatedState)).count();
+            if (count == tasks.size()) {
+                return;
+            }
+
+            Thread.sleep(pause * 1000);
+            time += pause;
+        }
+
+        assertThat(false)
+                .as("Number of task in state " + translatedState + " for service " + appId + " does not match after " + timeout + " seconds.")
+                .isTrue();
     }
 
 }

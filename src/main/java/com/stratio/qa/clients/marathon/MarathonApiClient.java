@@ -25,9 +25,6 @@ import com.stratio.qa.models.marathon.Volume;
 import com.stratio.qa.specs.CommonG;
 import com.stratio.qa.utils.ThreadProperty;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 public class MarathonApiClient extends BaseClient {
 
     private static MarathonApiClient CLIENT;

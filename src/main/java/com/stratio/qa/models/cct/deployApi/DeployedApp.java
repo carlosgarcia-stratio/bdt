@@ -22,6 +22,18 @@ import java.util.List;
 
 public class DeployedApp extends BaseResponse {
 
+    public static final String ACTION_UPDATE = "update";
+
+    public static final String ACTION_UPGRADE = "upgrade";
+
+    public static final String ACTION_DELETE = "delete";
+
+    public static final String ACTION_START = "start";
+
+    public static final String ACTION_STOP = "stop";
+
+    public static final String ACTION_OPEN_SERVICE = "open_service";
+
     private String serviceName;
 
     private String service;
@@ -88,5 +100,9 @@ public class DeployedApp extends BaseResponse {
 
     public int getTotalHealthyTasks() {
         return totalHealthyTasks;
+    }
+
+    public List<External> getExternal() {
+        return external;
     }
 }
