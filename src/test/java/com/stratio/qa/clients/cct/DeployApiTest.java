@@ -46,7 +46,7 @@ public class DeployApiTest extends BaseClientTest {
         return DeployApiClient.getInstance(commong);
     }
 
-    @BeforeClass (groups = {"deployApi"})
+    @BeforeClass
     public void start() throws Exception {
         startMockServer();
         deployApiClient = getClient();
@@ -58,7 +58,7 @@ public class DeployApiTest extends BaseClientTest {
         ThreadProperty.set("deploy_api_id", "deploy-api");
     }
 
-    @Test (groups = {"deployApi"})
+    @Test
     public void example() throws Exception {
         setEnvs();
         String endpoint = "/service/";
@@ -84,7 +84,7 @@ public class DeployApiTest extends BaseClientTest {
         assertThat(responseList.getList().size()).as("Response elements do not match").isEqualTo(16);
     }
 
-    @AfterClass (groups = {"deployApi"})
+    @AfterClass
     public void stop() {
         stopMockServer();
     }
