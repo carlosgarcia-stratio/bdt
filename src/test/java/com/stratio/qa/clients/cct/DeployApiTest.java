@@ -25,6 +25,10 @@ import org.mockserver.client.MockServerClient;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.mockserver.model.HttpRequest.request;
@@ -35,12 +39,14 @@ public class DeployApiTest extends BaseClientTest {
 
     private DeployApiClient deployApiClient;
 
+    private String baseResponsePath = "responses/cct/deployApi/";
+
     protected DeployApiClient getClient() {
         setHTTPClient();
         return DeployApiClient.getInstance(commong);
     }
 
-    @BeforeClass
+    @BeforeClass (groups = {"deployApi"})
     public void start() throws Exception {
         startMockServer();
         deployApiClient = getClient();
@@ -52,11 +58,15 @@ public class DeployApiTest extends BaseClientTest {
         ThreadProperty.set("deploy_api_id", "deploy-api");
     }
 
-    @Test
+    @Test (groups = {"deployApi"})
     public void example() throws Exception {
         setEnvs();
         String endpoint = "/service/";
         endpoint = endpoint.concat(ThreadProperty.get("deploy_api_id")).concat("/deployments");
+
+        String responsePath = baseResponsePath.concat("getAppsResponseOK.json");
+        String response = new String(Files.readAllBytes(Paths.get(getClass().getClassLoader().getResource(responsePath).getFile())));
+
         new MockServerClient("localhost", port)
             .when(
                 request()
@@ -66,7 +76,7 @@ public class DeployApiTest extends BaseClientTest {
             .respond(
                 response()
                     .withStatusCode(200)
-                    .withBody(DeployApiTestConstants.getAppsResponseOK)
+                    .withBody(response)
             );
 
         BaseResponseList<DeployedApp> responseList = deployApiClient.getDeployedApps();
@@ -74,7 +84,7 @@ public class DeployApiTest extends BaseClientTest {
         assertThat(responseList.getList().size()).as("Response elements do not match").isEqualTo(16);
     }
 
-    @AfterClass
+    @AfterClass (groups = {"deployApi"})
     public void stop() {
         stopMockServer();
     }

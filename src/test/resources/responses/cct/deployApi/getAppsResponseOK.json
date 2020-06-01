@@ -1,0 +1,1338 @@
+[
+  {
+    "model": "pegaso-security",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 36864,
+      "mem": 14336,
+      "gpus": 0,
+      "cpus": 9,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "postgrestls.6a337844-a1b2-11ea-b6e9-70b3d580000b",
+        "name": "postgrestls",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590759847000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.14",
+        "calicoIP": "172.16.160.67",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      },
+      {
+        "id": "19270be2-bab9-4071-8ae1-948a46375d42",
+        "name": "pg-0003",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759982000,
+        "resources": {
+          "disk": 12288,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.10",
+        "calicoIP": "172.16.125.70",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      },
+      {
+        "id": "7bafefef-914c-4f22-9cf7-2f4396b9d2e6",
+        "name": "pg-0002",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759877000,
+        "resources": {
+          "disk": 12288,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "172.16.36.72",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      },
+      {
+        "id": "cbc903c4-a049-4e60-ba42-3af5ae895e17",
+        "name": "pg-agent",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590965575000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.9",
+        "calicoIP": "172.16.15.10",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      },
+      {
+        "id": "d65c0b79-5d51-425a-9f47-abae10c964bd",
+        "name": "pg-0001",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759863000,
+        "resources": {
+          "disk": 12288,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "172.16.126.135",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      },
+      {
+        "id": "09029a51-0209-4ffc-a73b-b2e22c2cef8c",
+        "name": "pg-agent",
+        "state": "TASK_FAILED",
+        "healthy": 0,
+        "timestamp": 1590965565000,
+        "resources": {
+          "disk": 0,
+          "mem": 0,
+          "gpus": 0,
+          "cpus": 0,
+          "ports": null
+        },
+        "host": "10.200.6.9",
+        "calicoIP": "10.200.6.9",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      },
+      {
+        "id": "postgrestls.9e490308-a128-11ea-b6e9-70b3d580000b",
+        "name": "postgrestls",
+        "state": "TASK_KILLED",
+        "healthy": 0,
+        "timestamp": 1590703718000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.16",
+        "calicoIP": "10.200.6.16",
+        "marathonServiceName": "postgrestls",
+        "logs": null
+      }
+    ],
+    "totalTasks": 7,
+    "totalHealthyTasks": 6,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/postgrestls"
+      }
+    ],
+    "serviceName": "/postgrestls",
+    "service": "postgres"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 32044,
+      "mem": 9216,
+      "gpus": 0,
+      "cpus": 11,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "hdfs-example.1863ddc3-a1b2-11ea-b6e9-70b3d580000b",
+        "name": "hdfs-example",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590759720000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.12",
+        "calicoIP": "172.16.202.196",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "055fcae9-a34e-4a23-a8e9-35d3357e2ee3",
+        "name": "datanode-0003",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590760930000,
+        "resources": {
+          "disk": 5120,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.9",
+        "calicoIP": "172.16.15.8",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "1e651d00-bb7d-4720-bed2-f1ef7c3b7203",
+        "name": "datanode-0002",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590760906000,
+        "resources": {
+          "disk": 5120,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.10",
+        "calicoIP": "172.16.125.72",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "59c5fea6-e253-4882-a8a5-1224c6a40d18",
+        "name": "datanode-0001",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590760871000,
+        "resources": {
+          "disk": 5120,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "172.16.126.138",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "b4601e4d-7ffc-4421-89f9-8126d04b869d",
+        "name": "journalnode-0003",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759795000,
+        "resources": {
+          "disk": 2148,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "172.16.36.70",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "afb8345d-c5ea-4822-84d6-784bd92e0b8e",
+        "name": "journalnode-0002",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759761000,
+        "resources": {
+          "disk": 2148,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "172.16.126.133",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "d25f1b02-2ae5-4fd8-8888-79b38fd6cd06",
+        "name": "namenode-0002",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590760837000,
+        "resources": {
+          "disk": 5120,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "172.16.36.76",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "91c3de8d-e68e-492a-a489-b95103d354e6",
+        "name": "namenode-0001",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590760800000,
+        "resources": {
+          "disk": 5120,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "172.16.126.137",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "e7105bcb-c29c-46f5-ba0c-dea512824231",
+        "name": "journalnode-0001",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759737000,
+        "resources": {
+          "disk": 2148,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.16",
+        "calicoIP": "172.16.137.134",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "57f18552-9580-45b6-b5a2-50626812e87b",
+        "name": "namenode-0001",
+        "state": "TASK_FAILED",
+        "healthy": 0,
+        "timestamp": 1590759827000,
+        "resources": {
+          "disk": 0,
+          "mem": 0,
+          "gpus": 0,
+          "cpus": 0,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "10.200.6.17",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "535917b7-27bd-4e82-abef-e9666b350917",
+        "name": "namenode-0002",
+        "state": "TASK_FAILED",
+        "healthy": 0,
+        "timestamp": 1590760756000,
+        "resources": {
+          "disk": 0,
+          "mem": 0,
+          "gpus": 0,
+          "cpus": 0,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "10.200.6.18",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "2ba05fb3-c42d-4b12-87fe-8031f71eaa03",
+        "name": "namenode-0001",
+        "state": "TASK_FAILED",
+        "healthy": 0,
+        "timestamp": 1590760786000,
+        "resources": {
+          "disk": 0,
+          "mem": 0,
+          "gpus": 0,
+          "cpus": 0,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "10.200.6.17",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "6755f52c-0716-4de5-9a1b-e4f94288c65b",
+        "name": "namenode-0002",
+        "state": "TASK_FAILED",
+        "healthy": 0,
+        "timestamp": 1590760793000,
+        "resources": {
+          "disk": 0,
+          "mem": 0,
+          "gpus": 0,
+          "cpus": 0,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "10.200.6.18",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "9bd14d4f-e12b-45e7-b05e-e057318e6f6e",
+        "name": "namenode-0002",
+        "state": "TASK_FAILED",
+        "healthy": 0,
+        "timestamp": 1590760822000,
+        "resources": {
+          "disk": 0,
+          "mem": 0,
+          "gpus": 0,
+          "cpus": 0,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "10.200.6.18",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      },
+      {
+        "id": "hdfs-example.6fa29167-a128-11ea-b6e9-70b3d580000b",
+        "name": "hdfs-example",
+        "state": "TASK_KILLED",
+        "healthy": 0,
+        "timestamp": 1590703728000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "10.200.6.13",
+        "marathonServiceName": "hdfs-example",
+        "logs": null
+      }
+    ],
+    "totalTasks": 15,
+    "totalHealthyTasks": 14,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/hdfs-example"
+      }
+    ],
+    "serviceName": "/hdfs-example",
+    "service": "hdfs"
+  },
+  {
+    "model": "cct-deploy-api-basic",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 4096,
+      "gpus": 0,
+      "cpus": 2,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "command-center_cct-deploy-api.1192b0d7-a0a7-11ea-b6e9-70b3d580000b",
+        "name": "cct-deploy-api.command-center",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590645020000,
+        "resources": {
+          "disk": 0,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "172.16.225.5",
+        "marathonServiceName": "cct-deploy-api.command-center",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/cct-deploy-api"
+      }
+    ],
+    "serviceName": "/command-center/cct-deploy-api",
+    "service": "command-center"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 2000,
+      "mem": 2048,
+      "gpus": 0,
+      "cpus": 2,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "command-center_stratio-arangodb.8ff446c0-a0a5-11ea-b6e9-70b3d580000b",
+        "name": "stratio-arangodb.command-center",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644366000,
+        "resources": {
+          "disk": 2000,
+          "mem": 2048,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.16",
+        "calicoIP": "172.16.137.131",
+        "marathonServiceName": "stratio-arangodb.command-center",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/stratio-arangodb"
+      }
+    ],
+    "serviceName": "/command-center/stratio-arangodb",
+    "service": "arango"
+  },
+  {
+    "model": "cct-ui-basic",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 256,
+      "gpus": 0,
+      "cpus": 0.5,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "command-center_cct-ui.43293d88-a0a7-11ea-b6e9-70b3d580000b",
+        "name": "cct-ui.command-center",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590645089000,
+        "resources": {
+          "disk": 0,
+          "mem": 256,
+          "gpus": 0,
+          "cpus": 0.5,
+          "ports": null
+        },
+        "host": "10.200.6.11",
+        "calicoIP": "172.16.154.129",
+        "marathonServiceName": "cct-ui.command-center",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/cct-ui"
+      }
+    ],
+    "serviceName": "/command-center/cct-ui",
+    "service": "command-center"
+  },
+  {
+    "model": "basic",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 2048,
+      "gpus": 0,
+      "cpus": 2,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete"
+    ],
+    "tasks": [
+      {
+        "id": "poolpostgreseos.2fda1d43-a0a6-11ea-b6e9-70b3d580000b",
+        "name": "poolpostgreseos",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644641000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.11",
+        "calicoIP": "172.16.154.128",
+        "marathonServiceName": "poolpostgreseos",
+        "logs": null
+      },
+      {
+        "id": "poolpostgreseos.2fd206f2-a0a6-11ea-b6e9-70b3d580000b",
+        "name": "poolpostgreseos",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644641000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "172.16.225.1",
+        "marathonServiceName": "poolpostgreseos",
+        "logs": null
+      }
+    ],
+    "totalTasks": 2,
+    "totalHealthyTasks": 2,
+    "external": [],
+    "serviceName": "/poolpostgreseos",
+    "service": "pgbouncer"
+  },
+  {
+    "model": "cct-configuration-api-basic",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 512,
+      "gpus": 0,
+      "cpus": 1,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "command-center_cct-configuration-api.d3e31096-a0a6-11ea-b6e9-70b3d580000b",
+        "name": "cct-configuration-api.command-center",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644911000,
+        "resources": {
+          "disk": 0,
+          "mem": 512,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "172.16.225.4",
+        "marathonServiceName": "cct-configuration-api.command-center",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/cct-configuration-api"
+      }
+    ],
+    "serviceName": "/command-center/cct-configuration-api",
+    "service": "command-center"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 2048,
+      "gpus": 0,
+      "cpus": 2,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "gosecmanagement.4db92aed-a0a5-11ea-b6e9-70b3d580000b",
+        "name": "gosecmanagement",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644272000,
+        "resources": {
+          "disk": 0,
+          "mem": 2048,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.10",
+        "calicoIP": "172.16.125.64",
+        "marathonServiceName": "gosecmanagement",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/gosecmanagement"
+      }
+    ],
+    "serviceName": "/gosecmanagement",
+    "service": "management"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 1024,
+      "gpus": 0,
+      "cpus": 2,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete"
+    ],
+    "tasks": [
+      {
+        "id": "dyplon-http.fb859e7c-a0a4-11ea-b6e9-70b3d580000b",
+        "name": "dyplon-http",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644129000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.16",
+        "calicoIP": "172.16.137.130",
+        "marathonServiceName": "dyplon-http",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [],
+    "serviceName": "/dyplon-http",
+    "service": "dyplon-http"
+  },
+  {
+    "model": "cct-universe-basic",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 1024,
+      "gpus": 0,
+      "cpus": 1,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "command-center_cct-universe.9adef705-a0a6-11ea-b6e9-70b3d580000b",
+        "name": "cct-universe.command-center",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644815000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "172.16.225.3",
+        "marathonServiceName": "cct-universe.command-center",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/cct-universe/swagger-ui.html"
+      }
+    ],
+    "serviceName": "/command-center/cct-universe",
+    "service": "command-center"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 36864,
+      "mem": 13312,
+      "gpus": 0,
+      "cpus": 7,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "postgreseos.2f64d81b-a0a4-11ea-b6e9-70b3d580000b",
+        "name": "postgreseos",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590643792000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "172.16.225.0",
+        "marathonServiceName": "postgreseos",
+        "logs": null
+      },
+      {
+        "id": "2450415d-27a5-43ed-a319-01ce01ed5618",
+        "name": "pg-0003",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590644058000,
+        "resources": {
+          "disk": 12288,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.18",
+        "calicoIP": "172.16.36.65",
+        "marathonServiceName": "postgreseos",
+        "logs": null
+      },
+      {
+        "id": "856a1fb2-bf10-49e9-b687-c2273c3f8923",
+        "name": "pg-0002",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590643967000,
+        "resources": {
+          "disk": 12288,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.17",
+        "calicoIP": "172.16.126.128",
+        "marathonServiceName": "postgreseos",
+        "logs": null
+      },
+      {
+        "id": "e18ea8de-84df-4aab-a686-245c5978cf0e",
+        "name": "pg-0001",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590643876000,
+        "resources": {
+          "disk": 12288,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.16",
+        "calicoIP": "172.16.137.129",
+        "marathonServiceName": "postgreseos",
+        "logs": null
+      }
+    ],
+    "totalTasks": 4,
+    "totalHealthyTasks": 4,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/postgreseos"
+      }
+    ],
+    "serviceName": "/postgreseos",
+    "service": "postgres"
+  },
+  {
+    "model": "compatible",
+    "version": "0.4.23-SNAPSHOT",
+    "resources": {
+      "disk": 0,
+      "mem": 4096,
+      "gpus": 0,
+      "cpus": 3,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete"
+    ],
+    "tasks": [
+      {
+        "id": "rocket_rocket-test_rocket-test.8b0cb238-a1bc-11ea-b6e9-70b3d580000b",
+        "name": "rocket-test.rocket-test.rocket",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590764175000,
+        "resources": {
+          "disk": 0,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 3,
+          "ports": null
+        },
+        "host": "10.200.6.12",
+        "calicoIP": "172.16.202.200",
+        "marathonServiceName": "rocket-test.rocket-test.rocket",
+        "logs": null
+      },
+      {
+        "id": "rocket_rocket-test_rocket-test.b9a8e016-a1bb-11ea-b6e9-70b3d580000b",
+        "name": "rocket-test.rocket-test.rocket",
+        "state": "TASK_KILLED",
+        "healthy": 0,
+        "timestamp": 1590764174000,
+        "resources": {
+          "disk": 0,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 3,
+          "ports": null
+        },
+        "host": "10.200.6.15",
+        "calicoIP": "10.200.6.15",
+        "marathonServiceName": "rocket-test.rocket-test.rocket",
+        "logs": null
+      }
+    ],
+    "totalTasks": 2,
+    "totalHealthyTasks": 1,
+    "external": [],
+    "serviceName": "/rocket/rocket-test/rocket-test",
+    "service": "rocket"
+  },
+  {
+    "model": "cct-marathon-services-basic",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 512,
+      "gpus": 0,
+      "cpus": 0.5,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "upgrade",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "command-center_cct-marathon-services.6c2f84b4-a0a6-11ea-b6e9-70b3d580000b",
+        "name": "cct-marathon-services.command-center",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644739000,
+        "resources": {
+          "disk": 0,
+          "mem": 512,
+          "gpus": 0,
+          "cpus": 0.5,
+          "ports": null
+        },
+        "host": "10.200.6.13",
+        "calicoIP": "172.16.225.2",
+        "marathonServiceName": "cct-marathon-services.command-center",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/cct-marathon-services/swagger-ui.html"
+      }
+    ],
+    "serviceName": "/command-center/cct-marathon-services",
+    "service": "command-center"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 0,
+      "mem": 1024,
+      "gpus": 0,
+      "cpus": 2,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete"
+    ],
+    "tasks": [
+      {
+        "id": "marathonlb.bba8efa1-a0a5-11ea-b6e9-70b3d580000b",
+        "name": "marathonlb",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590644435000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": "[80-80, 443-443, 9090-9091, 10000-10100]"
+        },
+        "host": "10.200.6.19",
+        "calicoIP": "10.200.6.19",
+        "marathonServiceName": "marathonlb",
+        "logs": null
+      }
+    ],
+    "totalTasks": 1,
+    "totalHealthyTasks": 1,
+    "external": [],
+    "serviceName": "/marathonlb",
+    "service": "marathon-lb"
+  },
+  {
+    "model": "pegaso",
+    "version": "0.4.22",
+    "resources": {
+      "disk": 3072,
+      "mem": 13312,
+      "gpus": 0,
+      "cpus": 7,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete",
+      "open_service"
+    ],
+    "tasks": [
+      {
+        "id": "zkuserland.7aa585b5-a1b2-11ea-b6e9-70b3d580000b",
+        "name": "zkuserland",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590759879000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.11",
+        "calicoIP": "172.16.154.137",
+        "marathonServiceName": "zkuserland",
+        "logs": null
+      },
+      {
+        "id": "3fc799f7-0bf7-4859-98c8-edd249513de5",
+        "name": "zk-0003",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590760055000,
+        "resources": {
+          "disk": 1024,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.11",
+        "calicoIP": "172.16.154.138",
+        "marathonServiceName": "zkuserland",
+        "logs": null
+      },
+      {
+        "id": "297baed4-43c6-4f7b-9a94-1accb21ecb9d",
+        "name": "zk-0002",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759974000,
+        "resources": {
+          "disk": 1024,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.9",
+        "calicoIP": "172.16.15.6",
+        "marathonServiceName": "zkuserland",
+        "logs": null
+      },
+      {
+        "id": "bf86ff06-b99b-420b-92b8-0ddfc23f3756",
+        "name": "zk-0001",
+        "state": "TASK_RUNNING",
+        "healthy": 2,
+        "timestamp": 1590759960000,
+        "resources": {
+          "disk": 1024,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 2,
+          "ports": null
+        },
+        "host": "10.200.6.10",
+        "calicoIP": "172.16.125.69",
+        "marathonServiceName": "zkuserland",
+        "logs": null
+      },
+      {
+        "id": "zkuserland.bddc5af9-a128-11ea-b6e9-70b3d580000b",
+        "name": "zkuserland",
+        "state": "TASK_KILLED",
+        "healthy": 0,
+        "timestamp": 1590703716000,
+        "resources": {
+          "disk": 0,
+          "mem": 1024,
+          "gpus": 0,
+          "cpus": 1,
+          "ports": null
+        },
+        "host": "10.200.6.15",
+        "calicoIP": "10.200.6.15",
+        "marathonServiceName": "zkuserland",
+        "logs": null
+      }
+    ],
+    "totalTasks": 5,
+    "totalHealthyTasks": 4,
+    "external": [
+      {
+        "type": "adminrouter",
+        "url": "https://bootstrap.nightlybackward.labs.stratio.com/service/zkuserland"
+      }
+    ],
+    "serviceName": "/zkuserland",
+    "service": "zookeeper"
+  },
+  {
+    "model": "compatible",
+    "version": "0.4.23-SNAPSHOT",
+    "resources": {
+      "disk": 0,
+      "mem": 4096,
+      "gpus": 0,
+      "cpus": 3,
+      "ports": ""
+    },
+    "status": 2,
+    "healthy": 1,
+    "actions": [
+      "update",
+      "restart",
+      "stop",
+      "delete"
+    ],
+    "tasks": [
+      {
+        "id": "rocket_rocket-carlos_rocket-carlos.a5d574a1-a1ba-11ea-b6e9-70b3d580000b",
+        "name": "rocket-carlos.rocket-carlos.rocket",
+        "state": "TASK_RUNNING",
+        "healthy": 1,
+        "timestamp": 1590763361000,
+        "resources": {
+          "disk": 0,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 3,
+          "ports": null
+        },
+        "host": "10.200.6.15",
+        "calicoIP": "172.16.129.132",
+        "marathonServiceName": "rocket-carlos.rocket-carlos.rocket",
+        "logs": null
+      },
+      {
+        "id": "rocket_rocket-carlos_rocket-carlos.b84ddd86-a1b3-11ea-b6e9-70b3d580000b",
+        "name": "rocket-carlos.rocket-carlos.rocket",
+        "state": "TASK_KILLED",
+        "healthy": 0,
+        "timestamp": 1590762059000,
+        "resources": {
+          "disk": 0,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 3,
+          "ports": null
+        },
+        "host": "10.200.6.12",
+        "calicoIP": "10.200.6.12",
+        "marathonServiceName": "rocket-carlos.rocket-carlos.rocket",
+        "logs": null
+      },
+      {
+        "id": "rocket_rocket-carlos_rocket-carlos.c46d0ecb-a1b7-11ea-b6e9-70b3d580000b",
+        "name": "rocket-carlos.rocket-carlos.rocket",
+        "state": "TASK_KILLED",
+        "healthy": 0,
+        "timestamp": 1590763311000,
+        "resources": {
+          "disk": 0,
+          "mem": 4096,
+          "gpus": 0,
+          "cpus": 3,
+          "ports": null
+        },
+        "host": "10.200.6.15",
+        "calicoIP": "10.200.6.15",
+        "marathonServiceName": "rocket-carlos.rocket-carlos.rocket",
+        "logs": null
+      }
+    ],
+    "totalTasks": 3,
+    "totalHealthyTasks": 1,
+    "external": [],
+    "serviceName": "/rocket/rocket-carlos/rocket-carlos",
+    "service": "rocket"
+  }
+]
