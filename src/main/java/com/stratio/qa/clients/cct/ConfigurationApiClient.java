@@ -40,13 +40,16 @@ public class ConfigurationApiClient extends BaseClient {
     }
 
     public BaseResponse getCentralConfiguration() throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/central");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/central");
         Response response = get(url);
         return map(response);
     }
 
     public BaseResponse getCentralConfiguration(String path) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/central?path=");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort())
+                .concat("/service/cct-configuration-api/central?path=");
         url = url.concat(path);
 
         Response response = get(url);
@@ -54,13 +57,16 @@ public class ConfigurationApiClient extends BaseClient {
     }
 
     public BaseResponse getSchema() throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/central/schema");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat(":443/service/cct-configuration-api/central/schema");
+
         Response response = get(url);
         return map(response);
     }
 
     public CalicoConfiguration getNetwork(String networkId) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/network/");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat(":443/service/cct-configuration-api/network/");
         url = url.concat(networkId);
 
         Response response = get(url);
@@ -68,20 +74,23 @@ public class ConfigurationApiClient extends BaseClient {
     }
 
     public BaseResponseList<CalicoConfiguration> getAllNetworks() throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/network/all");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/network/all");
 
         Response response = get(url);
         return mapList(response, CalicoConfiguration.class);
     }
 
     public BaseResponse getMesosConfiguration() throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/mesos");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/mesos");
         Response response = get(url);
         return map(response);
     }
 
     public BaseResponse getMesosConfiguration(String path) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/mesos?path=");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/mesos?path=");
         url = url.concat(path);
 
         Response response = get(url);
@@ -89,21 +98,24 @@ public class ConfigurationApiClient extends BaseClient {
     }
 
     public CalicoConfiguration createNetwork(String data) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/network");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/network");
 
         Response response = post(url, data);
         return map(response, CalicoConfiguration.class);
     }
 
     public CalicoConfiguration updateNetwork(String data) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/network");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/network");
 
         Response response = put(url, data);
         return map(response, CalicoConfiguration.class);
     }
 
     public BaseResponse removeNetwork(String networkId) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443/service/cct-configuration-api/network/");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
+                .concat(":" + getPort()).concat("/service/cct-configuration-api/network/");
         url = url.concat(networkId);
 
         Response response = delete(url);

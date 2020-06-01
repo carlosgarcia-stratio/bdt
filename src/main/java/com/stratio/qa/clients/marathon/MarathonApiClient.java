@@ -44,14 +44,14 @@ public class MarathonApiClient extends BaseClient {
     }
 
     public AppsResponse getApps() throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443").concat("/marathon/v2/apps");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":" + getPort()).concat("/marathon/v2/apps");
 
         Response response = get(url);
         return map(response, AppsResponse.class);
     }
 
     public AppResponse getApp(String appId) throws Exception {
-        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":443").concat("/marathon/v2/apps/");
+        String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT")).concat(":" + getPort()).concat("/marathon/v2/apps/");
         url = url.concat(appId);
 
         Response response = get(url);

@@ -42,11 +42,21 @@ public class BaseClient {
 
     protected ObjectMapper mapper = new ObjectMapper();
 
+    private String port = "443";
+
     protected BaseClient(CommonG common) {
 
         this.httpClient = common.getClient();
         this.cookies = common.getCookies();
         this.log = common.getLogger();
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getPort() {
+        return  this.port;
     }
 
     public BaseResponse map(Response response) throws Exception {

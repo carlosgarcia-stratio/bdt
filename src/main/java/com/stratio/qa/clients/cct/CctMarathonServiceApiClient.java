@@ -44,7 +44,8 @@ public class CctMarathonServiceApiClient extends BaseClient {
 
     public DeployedService getService(String serviceId) throws Exception {
         String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
-                .concat(":443/service/").concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services");
+                .concat(":" + getPort()).concat("/service/")
+                .concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services");
         url = url.concat(serviceId);
 
         Response response = get(url);
@@ -53,7 +54,8 @@ public class CctMarathonServiceApiClient extends BaseClient {
 
     public DeployedService getService(String serviceId, int tpage, int tsize) throws Exception {
         String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
-                .concat(":443/service/").concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services/");
+                .concat(":" + getPort()).concat("/service/")
+                .concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services/");
 
         url = url.concat(serviceId);
 
@@ -68,7 +70,8 @@ public class CctMarathonServiceApiClient extends BaseClient {
 
     public TaskLogsResponse getLogPaths(String taskId) throws Exception {
         String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
-                .concat(":443/service/").concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services/tasks/" + taskId + "/logs");
+                .concat(":" + getPort()).concat("/service/")
+                .concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services/tasks/" + taskId + "/logs");
 
         Response response = get(url);
         return map(response, TaskLogsResponse.class);
@@ -76,7 +79,8 @@ public class CctMarathonServiceApiClient extends BaseClient {
 
     public DeployedServicesResponse getDeployedServices(String tenant) throws Exception {
         String url = "https://".concat(ThreadProperty.get("EOS_ACCESS_POINT"))
-                .concat(":443/service/").concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services?tenant=");
+                .concat(":" + getPort()).concat("/service/")
+                .concat(ThreadProperty.get("cct-marathon-services_id")).concat("/v1/services?tenant=");
         url = url.concat(tenant);
 
         Response response = get(url);
