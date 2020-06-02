@@ -1914,6 +1914,7 @@ public class CCTSpec extends BaseGSpec {
      * @throws Exception
      */
     @Given("^I get the '(internal|external)' ip for service id '(.+?)' for task name '(.+?)'( and save it in environment variable '(.*?)')?")
+    @Deprecated // TODO Refactor with "^I get host ip for task '(.+?)' in service with id '(.+?)' from CCT and save the value in environment variable '(.+?)'$"
     public void getMachineIp(String type, String serviceId, String taskName, String envVar) throws Exception {
 
         String ip = null;
