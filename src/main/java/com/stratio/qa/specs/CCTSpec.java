@@ -78,8 +78,20 @@ public class CCTSpec extends BaseGSpec {
         mesosApiClient = MesosApiClient.getInstance(this.commonspec);
     }
 
+    @When("^I get taskId for task '(.+?)' in service with id '(.+?)' from CCT and save the value in environment variable '(.+?)'$")
+    public void getTaskId(String taskName, String serviceId, String envVar) throws Exception {
+        if (ThreadProperty.get("cct-marathon-services_id") == null) {
+            DeployedTask task = getServiceTaskFromDeployApi(serviceId, taskName);
+            ThreadProperty.set(envVar, task.getId());
+        } else {
+            DeployedServiceTask task = getServiceTaskFromCctMarathonService(serviceId, taskName);
+            ThreadProperty.set(envVar, task.getId());
+        }
+    }
+
+
     @When("^I get host ip for task '(.+?)' in service with id '(.+?)' from CCT and save the value in environment variable '(.+?)'$")
-    public void getMarathonTaskId(String taskName, String serviceId, String envVar) throws Exception {
+    public void getHostIp(String taskName, String serviceId, String envVar) throws Exception {
         if (ThreadProperty.get("cct-marathon-services_id") == null) {
             DeployedTask task = getServiceTaskFromDeployApi(serviceId, taskName);
             ThreadProperty.set(envVar, task.getHost());
@@ -118,24 +130,11 @@ public class CCTSpec extends BaseGSpec {
         }
 
         MesosTask mesosTask = mesosApiClient.getMesosTask(taskId).getTasks().get(0);
-        String containerId = getMesosTaskContainerId(mesosTask);
+        String containerId = MesosApiClient.utils.getMesosTaskContainerId(mesosTask);
         assertThat(containerId).as("Error searching containerId for mesos task: " + taskId).isNotNull();
 
         String containerName = "mesos-".concat(containerId);
         ThreadProperty.set(envVar, containerName);
-    }
-
-    private String getMesosTaskContainerId(MesosTask task) {
-        return task.getStatuses().stream()
-                        .sorted(Comparator.comparing(com.stratio.qa.models.mesos.TaskStatus::getTimestamp,
-                                Comparator.nullsLast(Comparator.reverseOrder())))
-                        .map(com.stratio.qa.models.mesos.TaskStatus::getContainerStatus)
-                        .filter(status -> status.containsKey("container_id"))
-                        .map(status -> (Map<String, Object>) status.get("container_id"))
-                        .filter(container -> container.containsKey("value"))
-                        .map(container -> String.valueOf(container.get("value")))
-                        .findFirst()
-                        .orElse(null);
     }
 
     /**

@@ -25,6 +25,7 @@ import com.stratio.qa.utils.ThreadProperty;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -142,4 +143,86 @@ public class MarathonSpec extends BaseGSpec {
                 .isTrue();
     }
 
+    @Then("^in less than '(\\d+)' seconds, checking each '(\\d+)' seconds, service with id '(.*)' has '(\\d+)' '(healthy|unhealthy|staged|running)' task[s]? in Marathon$")
+    public void checkNumberOfTasksHealthinessWithPolling(int timeout, int pause, String appId, int numberOfTasks, String state) throws Exception {
+        AppResponse app;
+        int count = 0;
+
+        int time = 0;
+        while (time < timeout) {
+            app = marathonApiClient.getApp(appId);
+
+            switch (state) {
+                case "healthy":
+                    count = app.getApp().getTasksHealthy();
+                    break;
+                case "unhealthy":
+                    count = app.getApp().getTasksUnhealthy();
+                    break;
+                case "staged":
+                    count = app.getApp().getTasksStaged();
+                    break;
+                case "running":
+                    count = app.getApp().getTasksRunning();
+                    break;
+                default:
+                    count = 0;
+            }
+
+            if (count == numberOfTasks) {
+                return;
+            }
+
+            Thread.sleep(pause * 1000);
+            time += pause;
+        }
+
+        assertThat(false)
+                .as("Number of task(s) " + state + " for service " + appId + " does not match after " + timeout + " seconds.")
+                .isTrue();
+    }
+
+    @Then("^in less than '(\\d+)' seconds, checking each '(\\d+)' seconds, service with id '(.*)' has all tasks '(healthy|unhealthy|unknown)' in Marathon$")
+    public void checkAllTasksHealthinessWithPolling(int timeout, int pause, String appId, String state) throws Exception {
+        AppResponse app;
+        int count = 0;
+
+        int time = 0;
+        while (time < timeout) {
+            app = marathonApiClient.getApp(appId);
+
+            switch (state) {
+                case "healthy":
+                    count = app.getApp().getTasksHealthy();
+                    break;
+                case "unhealthy":
+                    count = app.getApp().getTasksUnhealthy();
+                    break;
+                case "staged":
+                    count = app.getApp().getTasksStaged();
+                    break;
+                case "running":
+                    count = app.getApp().getTasksRunning();
+                    break;
+                default:
+                    count = 0;
+            }
+
+            if (count == app.getApp().getTasks().size()) {
+                return;
+            }
+            Thread.sleep(pause * 1000);
+            time += pause;
+        }
+
+        assertThat(false)
+                .as("Number of task(s) " + state + " for service " + appId + " does not match after " + timeout + " seconds.")
+                .isTrue();
+    }
+
+    @When("^I get taskId for task '(.+?)' in service with id '(.+?)' from Marathon and save the value in environment variable '(.+?)'$")
+    public void getTaskId(String taskName, String serviceId, String envVar) throws Exception {
+        String taskId = MarathonApiClient.utils.getTaskId(taskName, serviceId);
+        ThreadProperty.set(envVar, taskId);
+    }
 }
