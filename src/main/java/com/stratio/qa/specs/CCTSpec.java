@@ -89,7 +89,6 @@ public class CCTSpec extends BaseGSpec {
         }
     }
 
-
     @When("^I get host ip for task '(.+?)' in service with id '(.+?)' from CCT and save the value in environment variable '(.+?)'$")
     public void getHostIp(String taskName, String serviceId, String envVar) throws Exception {
         if (ThreadProperty.get("cct-marathon-services_id") == null) {
