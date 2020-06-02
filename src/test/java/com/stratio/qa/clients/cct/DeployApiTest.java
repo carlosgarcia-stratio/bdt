@@ -22,9 +22,7 @@ import com.stratio.qa.models.cct.deployApi.DeployedApp;
 import com.stratio.qa.utils.ThreadProperty;
 import org.mockserver.client.MockServerClient;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,7 +44,7 @@ public class DeployApiTest extends BaseClientTest {
         return DeployApiClient.getInstance(commong);
     }
 
-    @BeforeClass
+    @BeforeTest
     public void start() throws Exception {
         startMockServer();
         deployApiClient = getClient();
@@ -59,7 +57,7 @@ public class DeployApiTest extends BaseClientTest {
     }
 
     @Test
-    public void example() throws Exception {
+    public void getAppsTest() throws Exception {
         setEnvs();
         String endpoint = "/service/";
         endpoint = endpoint.concat(ThreadProperty.get("deploy_api_id")).concat("/deployments");
@@ -84,7 +82,7 @@ public class DeployApiTest extends BaseClientTest {
         assertThat(responseList.getList().size()).as("Response elements do not match").isEqualTo(16);
     }
 
-    @AfterClass
+    @AfterTest
     public void stop() {
         stopMockServer();
     }

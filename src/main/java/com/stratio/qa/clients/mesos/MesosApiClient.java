@@ -20,19 +20,24 @@ import com.ning.http.client.Response;
 import com.stratio.qa.clients.BaseClient;
 import com.stratio.qa.models.mesos.Log;
 import com.stratio.qa.models.mesos.MesosStateSummary;
+import com.stratio.qa.models.mesos.MesosTask;
 import com.stratio.qa.models.mesos.MesosTasksResponse;
 import com.stratio.qa.specs.CommonG;
 import com.stratio.qa.utils.ThreadProperty;
 
+import java.util.Comparator;
 import java.util.Map;
 
 public class MesosApiClient extends BaseClient {
 
     private static MesosApiClient CLIENT;
 
+    public static MesosUtils utils;
+
     public static MesosApiClient getInstance(CommonG common) {
         if (CLIENT == null) {
             CLIENT = new MesosApiClient(common);
+            utils = new MesosUtils(CLIENT);
         }
         return CLIENT;
     }
@@ -68,5 +73,18 @@ public class MesosApiClient extends BaseClient {
 
         Response response = get(url);
         return map(response, MesosTasksResponse.class);
+    }
+
+    public String getMesosTaskContainerId(MesosTask task) {
+        return task.getStatuses().stream()
+                .sorted(Comparator.comparing(com.stratio.qa.models.mesos.TaskStatus::getTimestamp,
+                        Comparator.nullsLast(Comparator.reverseOrder())))
+                .map(com.stratio.qa.models.mesos.TaskStatus::getContainerStatus)
+                .filter(status -> status.containsKey("container_id"))
+                .map(status -> (Map<String, Object>) status.get("container_id"))
+                .filter(container -> container.containsKey("value"))
+                .map(container -> String.valueOf(container.get("value")))
+                .findFirst()
+                .orElse(null);
     }
 }

@@ -45,7 +45,6 @@ public class BaseClient {
     private String port = "443";
 
     protected BaseClient(CommonG common) {
-
         this.httpClient = common.getClient();
         this.cookies = common.getCookies();
         this.log = common.getLogger();

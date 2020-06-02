@@ -21,17 +21,22 @@ import com.ning.http.client.Response;
 import com.stratio.qa.clients.BaseClient;
 import com.stratio.qa.models.marathon.AppResponse;
 import com.stratio.qa.models.marathon.AppsResponse;
+
 import com.stratio.qa.models.marathon.Volume;
 import com.stratio.qa.specs.CommonG;
 import com.stratio.qa.utils.ThreadProperty;
+
 
 public class MarathonApiClient extends BaseClient {
 
     private static MarathonApiClient CLIENT;
 
+    public static MarathonUtils utils;
+
     public static MarathonApiClient getInstance(CommonG common) {
         if (CLIENT == null) {
             CLIENT = new MarathonApiClient(common);
+            utils = new MarathonUtils(CLIENT);
         }
         return CLIENT;
     }
