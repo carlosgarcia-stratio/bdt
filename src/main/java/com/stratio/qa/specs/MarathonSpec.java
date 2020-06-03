@@ -29,7 +29,6 @@ import cucumber.api.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class MarathonSpec extends BaseGSpec {
