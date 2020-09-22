@@ -35,6 +35,11 @@ import com.ning.http.client.Realm;
 import com.ning.http.client.Realm.AuthScheme;
 import com.ning.http.client.Response;
 import com.ning.http.client.cookie.Cookie;
+import com.stratio.qa.clients.cct.CctMarathonServiceApiClient;
+import com.stratio.qa.clients.cct.ConfigurationApiClient;
+import com.stratio.qa.clients.cct.DeployApiClient;
+import com.stratio.qa.clients.marathon.MarathonApiClient;
+import com.stratio.qa.clients.mesos.MesosApiClient;
 import com.stratio.qa.conditions.Conditions;
 import com.stratio.qa.utils.*;
 import io.cucumber.datatable.DataTable;
@@ -133,6 +138,16 @@ public class CommonG {
     private Optional<SearchResult> previousLdapResults;
 
     private Map<String, List<String>> previousSqlResult = null;
+
+    private MarathonApiClient marathonApiClient;
+
+    private MesosApiClient mesosApiClient;
+
+    private CctMarathonServiceApiClient cctMarathonServiceApiClient;
+
+    private ConfigurationApiClient configurationApiClient;
+
+    private DeployApiClient deployApiClient;
 
     /**
      * Checks if a given string matches a regular expression or contains a string
@@ -2574,5 +2589,32 @@ public class CommonG {
     public HDFSSecUtils getHDFSSecUtils() {
         return HDFSSecUtil.INSTANCE.getHDFSSecUtils();
     }
-}
 
+    public void initRestClients() {
+        this.marathonApiClient = MarathonApiClient.getInstance(this);
+        this.mesosApiClient = getMesosClient();
+        this.cctMarathonServiceApiClient = getCctMarathonServiceClient();
+        this.configurationApiClient = getConfigurationApiClient();
+        this.deployApiClient = getDeployApiClient();
+    }
+
+    public MarathonApiClient getMarathonClient() {
+        return marathonApiClient;
+    }
+
+    public MesosApiClient getMesosClient() {
+        return mesosApiClient;
+    }
+
+    public CctMarathonServiceApiClient getCctMarathonServiceClient() {
+        return cctMarathonServiceApiClient;
+    }
+
+    public ConfigurationApiClient getConfigurationApiClient() {
+        return configurationApiClient;
+    }
+
+    public DeployApiClient getDeployApiClient() {
+        return deployApiClient;
+    }
+}

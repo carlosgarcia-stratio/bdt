@@ -32,18 +32,18 @@ public class MesosApiClient extends BaseClient {
 
     private static MesosApiClient CLIENT;
 
-    public static MesosUtils utils;
+    public MesosUtils utils;
 
     public static MesosApiClient getInstance(CommonG common) {
         if (CLIENT == null || CLIENT.httpClient == null || CLIENT.httpClient.isClosed()) {
             CLIENT = new MesosApiClient(common);
-            utils = new MesosUtils(CLIENT);
         }
         return CLIENT;
     }
 
     private MesosApiClient(CommonG common) {
         super(common);
+        utils = new MesosUtils(CLIENT);
     }
 
     public Log getLogs(String path, String logType, Map<String, String> queryParams) throws Exception {

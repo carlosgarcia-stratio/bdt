@@ -34,16 +34,13 @@ public class MarathonSpec extends BaseGSpec {
 
     private final Logger logger = LoggerFactory.getLogger(CCTSpec.class);
 
-    private MarathonApiClient marathonApiClient;
-
     public MarathonSpec(CommonG spec) {
         this.commonspec = spec;
-        marathonApiClient = MarathonApiClient.getInstance(this.commonspec);
     }
 
     @Then("^service with id '(.*)' has '(\\d+)' task[s]? in '(running|finished|failed|staging|starting|killed)' state in Marathon$")
     public void checkNumberOfTasksState(String appId, int numberOfTasks, String state) throws Exception {
-        AppResponse app = marathonApiClient.getApp(appId);
+        AppResponse app = this.commonspec.getMarathonClient().getApp(appId);
         Collection<Task> tasks = app.getApp().getTasks();
 
         String translatedState = MarathonConstants.statesDict.get(state);
@@ -56,7 +53,7 @@ public class MarathonSpec extends BaseGSpec {
 
     @Then("^service with id '(.*)' has all tasks in '(running|finished|failed|staging|starting|killed)' state in Marathon$")
     public void checkAllTasksState(String appId, String state) throws Exception {
-        AppResponse app = marathonApiClient.getApp(appId);
+        AppResponse app = this.commonspec.getMarathonClient().getApp(appId);
         Collection<Task> tasks = app.getApp().getTasks();
 
         String translatedState = MarathonConstants.statesDict.get(state);
@@ -69,7 +66,7 @@ public class MarathonSpec extends BaseGSpec {
 
     @Then("^I get environment variable '(.*)' for service with id '(.*)' and save the value in environment variable '(.+?)'$")
     public void saveServiceEnvVariable(String serviceEnvVar, String serviceId, String envVar) throws Exception {
-        AppResponse app = marathonApiClient.getApp(serviceId);
+        AppResponse app = this.commonspec.getMarathonClient().getApp(serviceId);
         assertThat(app.getApp().getEnv().get(serviceEnvVar))
                 .as("Environment variable " + serviceEnvVar + " not found for service " + serviceId)
                 .isNotNull();
@@ -80,7 +77,7 @@ public class MarathonSpec extends BaseGSpec {
 
     @Then("^I get label '(.*)' for service with id '(.*)' and save the value in environment variable '(.+?)'$")
     public void saveServiceLabel(String label, String serviceId, String envVar) throws Exception {
-        AppResponse app = marathonApiClient.getApp(serviceId);
+        AppResponse app = this.commonspec.getMarathonClient().getApp(serviceId);
         assertThat(app.getApp().getLabels().get(label))
                 .as("Label " + label + " not found for service " + serviceId)
                 .isNotNull();
@@ -98,7 +95,7 @@ public class MarathonSpec extends BaseGSpec {
 
         int time = 0;
         while (time < timeout) {
-            app = marathonApiClient.getApp(appId);
+            app = this.commonspec.getMarathonClient().getApp(appId);
             if (app.getApp() != null) {
                 tasks = app.getApp().getTasks();
 
@@ -127,7 +124,7 @@ public class MarathonSpec extends BaseGSpec {
 
         int time = 0;
         while (time < timeout) {
-            app = marathonApiClient.getApp(appId);
+            app = this.commonspec.getMarathonClient().getApp(appId);
             if (app.getApp() != null) {
                 tasks = app.getApp().getTasks();
 
@@ -153,7 +150,7 @@ public class MarathonSpec extends BaseGSpec {
 
         int time = 0;
         while (time < timeout) {
-            app = marathonApiClient.getApp(appId);
+            app = this.commonspec.getMarathonClient().getApp(appId);
 
             if (app.getApp() != null) {
                 switch (state) {
@@ -194,7 +191,7 @@ public class MarathonSpec extends BaseGSpec {
 
         int time = 0;
         while (time < timeout) {
-            app = marathonApiClient.getApp(appId);
+            app = this.commonspec.getMarathonClient().getApp(appId);
             if (app.getApp() != null) {
                 switch (state) {
                     case "healthy":
@@ -229,13 +226,13 @@ public class MarathonSpec extends BaseGSpec {
 
     @When("^I get taskId for task '(.+?)' in service with id '(.+?)' from Marathon and save the value in environment variable '(.+?)'$")
     public void getTaskId(String taskName, String serviceId, String envVar) throws Exception {
-        String taskId = MarathonApiClient.utils.getTaskId(taskName, serviceId);
+        String taskId = this.commonspec.getMarathonClient().utils.getTaskId(taskName, serviceId);
         ThreadProperty.set(envVar, taskId);
     }
 
     @Then("^I get (service|container) port in position '(.*)' for service with id '(.*)' and save the value in environment variable '(.+?)'$")
     public void getServicePort(String serviceOrContainer, String position, String serviceId, String envVar) throws Exception {
-        AppResponse app = marathonApiClient.getApp(serviceId);
+        AppResponse app = this.commonspec.getMarathonClient().getApp(serviceId);
         Port portAux = new ArrayList<>(app.getApp().getContainer().getPortMappings()).get(Integer.parseInt(position));
         switch (serviceOrContainer) {
             case "service":     ThreadProperty.set(envVar, String.valueOf(portAux.getServicePort()));
