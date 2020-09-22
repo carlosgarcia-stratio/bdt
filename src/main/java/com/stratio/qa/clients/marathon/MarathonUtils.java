@@ -34,7 +34,7 @@ public class MarathonUtils {
         AppResponse app = marathonApiClient.getApp(serviceId);
         Collection<Task> tasks = app.getApp().getTasks();
 
-        Task task = tasks.stream().filter(t -> t.getAppId().matches(taskName)).findFirst().orElse(null);
+        Task task = tasks.stream().filter(t -> t.getId().matches(taskName)).findFirst().orElse(null);
         assertThat(task).as("Task " + taskName + " not found in Marathon for service " + serviceId).isNotNull();
 
         return task.getId();
