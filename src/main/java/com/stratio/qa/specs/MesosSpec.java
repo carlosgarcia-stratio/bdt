@@ -32,10 +32,13 @@ public class MesosSpec extends BaseGSpec {
 
     private MesosApiClient mesosApiClient;
 
+    private MarathonApiClient marathonApiClient;
+
     public MesosSpec(CommonG spec) {
 
         this.commonspec = spec;
         mesosApiClient = MesosApiClient.getInstance(this.commonspec);
+        marathonApiClient = MarathonApiClient.getInstance(this.commonspec);
     }
 
     @Then("^task with id '(.+?)'( does not)? exist[s]? in mesos$")
