@@ -39,7 +39,9 @@ import com.stratio.qa.clients.cct.CctMarathonServiceApiClient;
 import com.stratio.qa.clients.cct.ConfigurationApiClient;
 import com.stratio.qa.clients.cct.DeployApiClient;
 import com.stratio.qa.clients.marathon.MarathonApiClient;
+import com.stratio.qa.clients.marathon.MarathonUtils;
 import com.stratio.qa.clients.mesos.MesosApiClient;
+import com.stratio.qa.clients.mesos.MesosUtils;
 import com.stratio.qa.conditions.Conditions;
 import com.stratio.qa.utils.*;
 import io.cucumber.datatable.DataTable;
@@ -139,15 +141,19 @@ public class CommonG {
 
     private Map<String, List<String>> previousSqlResult = null;
 
-    private MarathonApiClient marathonApiClient;
+    MarathonApiClient marathonClient;
 
-    private MesosApiClient mesosApiClient;
+    MarathonUtils marathonUtils;
 
-    private CctMarathonServiceApiClient cctMarathonServiceApiClient;
+    MesosApiClient mesosApiClient;
 
-    private ConfigurationApiClient configurationApiClient;
+    MesosUtils mesosUtils;
 
-    private DeployApiClient deployApiClient;
+    CctMarathonServiceApiClient cctMarathonServiceClient;
+
+    ConfigurationApiClient configurationApiClient;
+
+    DeployApiClient deployApiClient;
 
     /**
      * Checks if a given string matches a regular expression or contains a string
@@ -2590,31 +2596,13 @@ public class CommonG {
         return HDFSSecUtil.INSTANCE.getHDFSSecUtils();
     }
 
-    public void initRestClients() {
-        this.marathonApiClient = MarathonApiClient.getInstance(this);
-        this.mesosApiClient = getMesosClient();
-        this.cctMarathonServiceApiClient = getCctMarathonServiceClient();
-        this.configurationApiClient = getConfigurationApiClient();
-        this.deployApiClient = getDeployApiClient();
-    }
-
-    public MarathonApiClient getMarathonClient() {
-        return marathonApiClient;
-    }
-
-    public MesosApiClient getMesosClient() {
-        return mesosApiClient;
-    }
-
-    public CctMarathonServiceApiClient getCctMarathonServiceClient() {
-        return cctMarathonServiceApiClient;
-    }
-
-    public ConfigurationApiClient getConfigurationApiClient() {
-        return configurationApiClient;
-    }
-
-    public DeployApiClient getDeployApiClient() {
-        return deployApiClient;
+    public void initClients() {
+        marathonClient = MarathonApiClient.getInstance(this);
+        marathonUtils = new MarathonUtils(marathonClient);
+        mesosApiClient = MesosApiClient.getInstance(this);
+        mesosUtils = new MesosUtils(mesosApiClient);
+        cctMarathonServiceClient = CctMarathonServiceApiClient.getInstance(this);
+        configurationApiClient = ConfigurationApiClient.getInstance(this);
+        deployApiClient = DeployApiClient.getInstance(this);
     }
 }

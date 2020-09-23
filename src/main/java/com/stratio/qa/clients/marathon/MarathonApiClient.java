@@ -21,15 +21,18 @@ import com.ning.http.client.Response;
 import com.stratio.qa.clients.BaseClient;
 import com.stratio.qa.models.marathon.AppResponse;
 import com.stratio.qa.models.marathon.AppsResponse;
+import com.stratio.qa.models.marathon.Task;
 import com.stratio.qa.models.marathon.Volume;
 import com.stratio.qa.specs.CommonG;
 import com.stratio.qa.utils.ThreadProperty;
 
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class MarathonApiClient extends BaseClient {
 
     private static MarathonApiClient CLIENT;
-
-    public MarathonUtils utils;
 
     public static MarathonApiClient getInstance(CommonG common) {
         if (CLIENT == null || CLIENT.httpClient == null || CLIENT.httpClient.isClosed()) {
@@ -43,7 +46,6 @@ public class MarathonApiClient extends BaseClient {
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Volume.class, new Volume.VolumeDeserializer());
         mapper.registerModule(module);
-        utils = new MarathonUtils(CLIENT);
     }
 
     public AppsResponse getApps() throws Exception {

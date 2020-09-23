@@ -126,7 +126,7 @@ public class CukesGHooks extends BaseGSpec implements ConcurrentEventListener {
     private void handleTestStepFinished(TestStepFinished event) {
         if (event.result.getStatus() == Result.Type.FAILED) {
             StringBuilder stepFailedText = new StringBuilder();
-            stepFailedText.append("STEP FAILED!!!");
+            stepFailedText.append("STEP FAILED!!! (" + event.result.getErrorMessage() + ")");
             if (StepException.INSTANCE.getException() != null) {
                 stepFailedText.append(" - ").append(StepException.INSTANCE.getException().getClass().getCanonicalName());
                 if (StepException.INSTANCE.getException().getMessage() != null) {

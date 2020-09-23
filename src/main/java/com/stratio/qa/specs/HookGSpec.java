@@ -290,6 +290,7 @@ public class HookGSpec extends BaseGSpec {
 
         commonspec.setClient(new AsyncHttpClient(new AsyncHttpClientConfig.Builder().setAcceptAnyCertificate(true).setAllowPoolingConnections(false)
                 .build()));
+        commonspec.initClients();
     }
 
     @After(order = ORDER_10, value = "@rest or @dcos")
