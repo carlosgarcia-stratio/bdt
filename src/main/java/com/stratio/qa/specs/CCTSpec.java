@@ -294,7 +294,7 @@ public class CCTSpec extends BaseGSpec {
 
     private String generateMesosLogPath(String taskId, String logType) {
         try {
-            MesosTask mesosTask = mesosApiClient.getMesosTask(taskId).getTasks().get(0);
+            MesosTask mesosTask = this.commonspec.mesosApiClient.getMesosTask(taskId).getTasks().get(0);
             String slaveId = mesosTask.getSlaveId();
             String frameworkId = mesosTask.getFrameworkId();
             String containerId = ((LinkedHashMap<String, String>) mesosTask.getStatuses().get(0).getContainerStatus().get("container_id")).get("value");

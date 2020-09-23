@@ -23,9 +23,6 @@ import com.stratio.qa.models.mesos.MesosStateSummary;
 import com.stratio.qa.models.mesos.MesosTasksResponse;
 import com.stratio.qa.specs.CommonG;
 import com.stratio.qa.utils.ThreadProperty;
-import com.stratio.qa.models.mesos.MesosTask;
-import java.util.Comparator;
-
 import java.util.Map;
 
 public class MesosApiClient extends BaseClient {
