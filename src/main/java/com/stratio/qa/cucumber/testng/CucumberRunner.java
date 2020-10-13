@@ -17,6 +17,7 @@
 package com.stratio.qa.cucumber.testng;
 
 import com.stratio.qa.cucumber.converter.LoopConverter;
+import com.stratio.qa.cucumber.runtime.RuntimeOptionsFactoryCustom;
 import cucumber.api.event.ConcurrentEventListener;
 import cucumber.api.event.TestRunFinished;
 import cucumber.api.event.TestRunStarted;
@@ -34,7 +35,6 @@ import cucumber.runtime.formatter.PluginFactory;
 import cucumber.runtime.model.FeatureLoader;
 import cucumber.runner.ThreadLocalRunnerSupplier;
 import cucumber.runtime.RuntimeOptions;
-import cucumber.runtime.RuntimeOptionsFactory;
 import cucumber.runtime.io.MultiLoader;
 import cucumber.runtime.io.ResourceLoader;
 import cucumber.runtime.io.ResourceLoaderClassFinder;
@@ -75,7 +75,7 @@ public class CucumberRunner {
         ClassLoader classLoader = clazz.getClassLoader();
         ResourceLoader resourceLoader = new MultiLoader(classLoader);
 
-        RuntimeOptionsFactory runtimeOptionsFactory = new RuntimeOptionsFactory(clazz);
+        RuntimeOptionsFactoryCustom runtimeOptionsFactory = new RuntimeOptionsFactoryCustom(clazz);
         runtimeOptions = runtimeOptionsFactory.create();
 
         String testSuffix = System.getProperty("TESTSUFFIX");
