@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.stratio.qa.utils.
+package com.stratio.qa.utils.vaultansible;
 
 import com.stratio.qa.utils.vaultansible.decoders.CypherFactory;
 import com.stratio.qa.utils.vaultansible.decoders.CypherInterface;
