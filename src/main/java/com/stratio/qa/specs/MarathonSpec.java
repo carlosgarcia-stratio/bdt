@@ -411,4 +411,5 @@ public class MarathonSpec extends BaseGSpec {
                 .orElse(null);
         return task != null ? internalIp ? task.getIpAddresses().stream().findFirst().get().getIpAddress() : task.getHost() : null;
     }
+
 }
