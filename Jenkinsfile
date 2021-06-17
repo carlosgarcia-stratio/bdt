@@ -6,7 +6,6 @@ hose {
     MODULE = 'bdt'
     REPOSITORY = 'github.com/bdt'
     SLACKTEAM = 'stratioqa'
-    DEPLOYONPRS = true
     DEVTIMEOUT = 30
     RELEASETIMEOUT = 30
     MAXITRETRIES = 2
