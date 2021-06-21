@@ -2118,8 +2118,15 @@ public class CommonG {
     public void runCommandLoggerAndEnvVar(int exitStatus, String envVar, Boolean local) {
         List<String> logOutput = Arrays.asList(this.getCommandResult().split("\n"));
         StringBuffer log = new StringBuffer();
-        int logLastLines = 25;
-        if (logOutput.size() < 25) {
+        int logLastLines;
+        try {
+            logLastLines = Integer.parseInt(System.getProperty("BDT_LOCAL_PROCESS_LOG_LINES", "25"));
+        } catch (NumberFormatException e) {
+            logger.warn("Unable to cast value: " + System.getProperty("BDT_LOCAL_PROCESS_LOG_LINES", "25"));
+            logLastLines = 25;
+        }
+
+        if (logOutput.size() < logLastLines) {
             logLastLines = logOutput.size();
         }
         for (String s : logOutput.subList(logOutput.size() - logLastLines, logOutput.size())) {
